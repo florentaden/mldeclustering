@@ -4,7 +4,8 @@
 
 ## Summary
 In this repository you will find (soon):
- - a code to identify the nearest neighbors or the ```N-1``` events in your catalog and extract the features necessary to run the Random Forest model;
+ - a folder containing the catalogs of Southern California and New Zealand used in our study;
+ - a code ``` extract_features.py ```to identify the nearest neighbors or the ```N-1``` events in your catalog and extract the features necessary to run the Random Forest model;
  - a code that load the declustering model and applies it to the feature catalog generated previously to predict the labels in your catalog.
 
 ## The Declustering Model(s)
