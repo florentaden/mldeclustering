@@ -22,36 +22,36 @@ new_df = df[1:].copy() # N-1 events will have a neighbor
 def nnd(event):
     """ identify the nearest neighbor of the given event in the parent catalog
         and return the following features:
-             i: index of the nearest neighbor (nn);
-             e: nearest-neighbor distance between the event and its nn;
-             t: rescaled time;
-             r: rescaled distance (!epicentral by default!);
-            dm: difference in magnitude between the event and its nn.
+             i+: index of the nearest neighbor (nn);
+             N+: nearest-neighbor distance between the event and its nn;
+             T+: rescaled time;
+             R+: rescaled distance (!epicentral by default!);
+            dm+: difference in magnitude between the event and its nn.
     """
     i = event.name
     neighbors = df[df.time < event.time].copy() # neighbors always come before
 
     # -- rescaled time
-    neighbors['t'] = (event.time - neighbors.time)*np.power(
+    neighbors['T+'] = (event.time - neighbors.time)*np.power(
         10, -0.5*w*neighbors.magnitude)
 
     # -- rescaled distance (epicentral!)
-    neighbors['r'] = np.power(np.sqrt(
+    neighbors['R+'] = np.power(np.sqrt(
         np.power(event.latitude-neighbors.latitude, 2) + \
         np.power(event.longitude-neighbors.longitude, 2)),
         fractal_dimension)*np.power(10, -0.5*w*neighbors.magnitude)
 
     # -- magnitude difference
-    neighbors['dm'] = neighbors.magnitude - event.magnitude
+    neighbors['dm+'] = neighbors.magnitude - event.magnitude
 
     # -- nearest-neighbor distance
-    neighbors['e'] = neighbors['t']*neighbors['r']
+    neighbors['N+'] = neighbors['T+']*neighbors['R+']
 
     # -- find the nearest neighbor which minimize eta
-    nn = neighbors.loc[neighbors['e'].idxmin()]
+    nn = neighbors.loc[neighbors['N+'].idxmin()]
 
     # -- update dataframe
-    return nn.name, nn['e'], nn['t'], nn['r'], nn['dm']
+    return nn.name, nn['N+'], nn['T+'], nn['R+'], nn['dm+']
 
 def count_off_sib(event):
     """ return the remaining features based on the identification of the
@@ -68,7 +68,7 @@ def count_off_sib(event):
         n_children = counts[event.name]
 
     # -- number of siblings
-    n_siblings = counts[event['i']]
+    n_siblings = counts[event['i+']]
     return n_children, n_siblings
 
 """ identify the nearest neighbor (nn) for each event """
@@ -77,7 +77,7 @@ ncpu = cpu_count() # feel free to change to a constant, the higher the faster
 with Pool(ncpu) as pool: # running in // is necessary for large catalogs
     output = pd.DataFrame(
         pool.map(nnd, [child for _, child in new_df.iterrows()]),
-        columns=['i', 'e', 't', 'r', 'dm']) # the feature dataframe
+        columns=['i+', 'N+', 'T+', 'R+', 'dm+']) # the feature dataframe
 output.index += 1
 new_df = pd.concat([new_df, output], axis=1) # update catalog
 
@@ -86,7 +86,7 @@ counts = Counter(new_df['i']) # count the # of time an event as been the nn
 with Pool(ncpu) as pool:
     output = pd.DataFrame(
         pool.map(count_off_sib, [child for _, child in new_df.iterrows()]),
-        columns=['nc', 'ns']) # the dataframe containing the remaining features
+        columns=['n_child', 'n_parent']) # the dataframe containing the remaining features
 output.index += 1
 
 """ write updated catalog ready to be declustered """
