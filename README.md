@@ -12,7 +12,7 @@ In this repository you will find (soon):
 
 *We assume here that the user has read the manuscript*
 
-You can download 3 different models *[here](https://zenodo.org/record/5557562)*. 
+You can download 3 different models *[here](https://zenodo.org/record/5557562)*.
 
 The hyperparameters of the Random Forest model used in our work makes it heavier depending on the size of the training data set. Computer's RAM can vary from one computer to another and having a heavy model could limit users with limited amount of memory such as my own laptop.
 As the accuracy of the model depends on the training data set (TD), we investigated the influence of the percentage of the total TD on the model accuracy with the idea to eventually propose different models to the users. To do so, we trained 5 models with a similar set of hyperparameters for 10%, 25%, 50%, 75% and 100% of the available TD (100 synthetic catalogs).
@@ -30,5 +30,3 @@ To test if the sampling of the total data has an effect on the final Random Fore
 #### *Figure 2. Influence of total data set sampling and comparison with the original model.*
 
 The result shows that using for example 50% of the total data set (100 catalogs) implies a 3% changes in the prediction of the original model for a difference of around 600Mb in the size of the model (compressed). Obviously, this 3% could actually improve the predictions but we do not have any mean to verify that. This result shows to the user that the predictions might be different using one model or another.
-
-# In the next few days, we will publish links to download a pair or models trained on different proportion of the total data set. Figures will be updated with uncompressed model sizes. Stay tuned!
