@@ -10,7 +10,9 @@ In this repository you will find (soon):
 
 ## The Declustering Model(s)
 
-*We assume here that the user as read the manuscript*
+*We assume here that the user has read the manuscript*
+
+You can download 3 different models *[here](https://zenodo.org/record/5557562)*. 
 
 The hyperparameters of the Random Forest model used in our work makes it heavier depending on the size of the training data set. Computer's RAM can vary from one computer to another and having a heavy model could limit users with limited amount of memory such as my own laptop.
 As the accuracy of the model depends on the training data set (TD), we investigated the influence of the percentage of the total TD on the model accuracy with the idea to eventually propose different models to the users. To do so, we trained 5 models with a similar set of hyperparameters for 10%, 25%, 50%, 75% and 100% of the available TD (100 synthetic catalogs).
