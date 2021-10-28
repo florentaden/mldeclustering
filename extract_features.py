@@ -10,7 +10,7 @@ output_name = 'mld_' + input_name
 
 # -- !parameters to estimate beforehand!
 fractal_dimension=1.6
-w=1.3
+w=1.03
 completeness_magnitude = 2.3
 
 df = pd.read_csv('test_catalogs/' + input_name) # read
