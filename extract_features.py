@@ -82,7 +82,7 @@ output.index += 1
 new_df = pd.concat([new_df, output], axis=1) # update catalog
 
 """ estimate the number of siblings and children """
-counts = Counter(new_df['i']) # count the # of time an event as been the nn
+counts = Counter(new_df['i+']) # count the # of time an event as been the nn
 with Pool(ncpu) as pool:
     output = pd.DataFrame(
         pool.map(count_off_sib, [child for _, child in new_df.iterrows()]),
