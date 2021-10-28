@@ -91,5 +91,5 @@ output.index += 1
 
 """ write updated catalog ready to be declustered """
 new_df = pd.concat([new_df, output], axis=1)
-new_df.to_csv('test_catalogs/' + output_name, index=False)
+new_df.to_csv('test_catalogs/' + output_name, index=True)
 print('done in {:.03f}min'.format((time()-to)/60.))
