@@ -74,22 +74,35 @@ def count_off_sib(event):
 """ identify the nearest neighbor (nn) for each event """
 to = time() # start the clock
 ncpu = cpu_count() # feel free to change to a constant, the higher the faster
-with Pool(ncpu) as pool: # running in // is necessary for large catalogs
+if ncpu == 1:
     output = pd.DataFrame(
-        pool.map(nnd, [child for _, child in new_df.iterrows()]),
-        columns=['i+', 'N+', 'T+', 'R+', 'dm+']) # the feature dataframe
+        map(nnd, [child for _, child in new_df.iterrows()]),
+        columns=['i+', 'N+', 'T+', 'R+', 'dm+'])
+else:
+    with Pool(ncpu) as pool: # running in // is necessary for large catalogs
+        output = pd.DataFrame(
+            pool.map(nnd, [child for _, child in new_df.iterrows()]),
+            columns=['i+', 'N+', 'T+', 'R+', 'dm+']) # the feature dataframe
 output.index += 1
 new_df = pd.concat([new_df, output], axis=1) # update catalog
 
 """ estimate the number of siblings and children """
 counts = Counter(new_df['i+']) # count the # of time an event as been the nn
-with Pool(ncpu) as pool:
+if ncpu == 1:
     output = pd.DataFrame(
-        pool.map(count_off_sib, [child for _, child in new_df.iterrows()]),
+        map(count_off_sib, [child for _, child in new_df.iterrows()]),
         columns=['n_child', 'n_parent']) # the dataframe containing the remaining features
+else:
+    with Pool(ncpu) as pool:
+        output = pd.DataFrame(
+            pool.map(count_off_sib, [child for _, child in new_df.iterrows()]),
+            columns=['n_child', 'n_parent']) # the dataframe containing the remaining features
 output.index += 1
 
 """ write updated catalog ready to be declustered """
 new_df = pd.concat([new_df, output], axis=1)
+new_df['n_parent'] = new_df['n_parent']/(len(new_df)/new_df.time.max())
+new_df['n_child'] = new_df['n_child']/(len(new_df)/new_df.time.max())
+
 new_df.to_csv('test_catalogs/' + output_name, index=False)
 print('done in {:.03f}min'.format((time()-to)/60.))

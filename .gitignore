@@ -1,0 +1,4 @@
+models
+*.png
+__pycache__
+test_catalogs/mld*
