@@ -1,5 +1,5 @@
 # An adaptable Random Forest model for the declustering of earthquake catalogs
-
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.5838353.svg)](https://doi.org/10.5281/zenodo.5838353)
 ### Access the preprint *[here](https://www.essoar.org/doi/10.1002/essoar.10508001.1)*
 
 ## Summary
@@ -12,7 +12,6 @@ In this repository you will find (soon):
 ## The Declustering Model(s)
 
 *We assume here that the user has read the manuscript*
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.5838353.svg)](https://doi.org/10.5281/zenodo.5838353)
 
 You can download 3 different models *[here](https://zenodo.org/record/5557562)*.
 
