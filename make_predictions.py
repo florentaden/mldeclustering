@@ -11,9 +11,16 @@ X = df[features_list]
 
 """ prediction """
 # -- load classifier
-model = load('models/RF_1P_5_{}.sav'.format(percent))
+model = load(f'models/RF_1P_5_{percent}.sav')
+
 # -- get class probabilities
-prob = model.predict_proba(X)[:, 1]
+probs = model.predict_proba(X)[:, 1]
+
+# -- save labelled catalog
+new_df = df.copy()
+new_df['probs'] = probs
+new_df['label'] = np.round(probs)
+new_df.to_csv('test_catalogs/labelled_mld_Hauksson_1981-2019.csv', index=True)
 
 """ plot predictions """
-plot_predictions(df=df, prob=prob, figure_name='predictions.png', dt=15)
+plot_predictions(df=df, probs=probs, figure_name='predictions.png', dt=15)

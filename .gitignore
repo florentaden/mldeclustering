@@ -2,3 +2,4 @@ models
 *.png
 __pycache__
 test_catalogs/mld*
+test_catalogs/labelled*
