@@ -1,5 +1,5 @@
-# Transfer Learning to Build a Scalable Model for the Declustering of Earthquake Catalogs
-
+# An adaptable Random Forest model for the declustering of earthquake catalogs
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.5838353.svg)](https://doi.org/10.5281/zenodo.5838353)
 ### Access the preprint *[here](https://www.essoar.org/doi/10.1002/essoar.10508001.1)*
 
 ## Summary
